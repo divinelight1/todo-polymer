@@ -1,0 +1,99 @@
+
+
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
+<dom-module id="single-task">
+	<style is="custom-style">
+		paper-material{
+		width: 74%;
+		margin: 50px auto;
+		padding: 30px;	    
+		}	
+		paper-fab.green{
+		--paper-fab-background: var(--paper-green-500);
+		--paper-fab-keyboard-focus-background: var(--paper-light-green-900);
+		}
+		paper-fab.red{
+		--paper-fab-background: var(--paper-red-900);
+		--paper-fab-keyboard-focus-background: var(--paper-light-red-900);
+		}
+		.green{
+		position: absolute;
+		right: 60px;
+		bottom: 10px;
+		}
+
+		.red{
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+		}
+		paper-input{
+		width: 80% !important;
+		margin: 0 auto;
+		}
+	</style>
+	<template>
+<paper-input label="Write ToDo" value="{{new}}"></paper-input>
+	<paper-fab mini icon="add" class="green" title="delete" on-tap="storeItems"></paper-fab>
+	<paper-fab mini icon="delete" class="red" title="delete" on-tap="deleteAll"></paper-fab>
+	<template is="dom-repeat" items= "{{tasks}}">
+<paper-material elevation="3">
+
+	<p id="text">{{item.task}}</p>
+	<paper-fab mini icon="delete" class="red" title="delete" on-click="deleteItem"></paper-fab>
+	<paper-fab mini icon="check" class="green" title="check" on-click="editTask"></paper-fab>
+</paper-material>
+	</template>
+	</template>
+	<script>
+		Polymer({
+			is : 'single-task',
+			ready: function(){
+				this.tasks = [
+				];
+				this.new = "";
+				this.updateTask();
+			},
+			storeItems : function(){
+				localStorage.setItem(this.new, 'no');
+
+				this.new = "";
+
+				this.updateTask();
+				
+			},
+			updateTask : function(){
+				this.splice('tasks', 0);
+
+				for(var task in localStorage){
+					var task = {
+					task : task
+					}
+					this.push('tasks', task);
+				}
+			},
+			deleteAll : function(){
+				this.splice('tasks', 0);
+				localStorage.clear();
+			},
+			deleteItem : function(e){
+				var taskName = e.model.item.task;
+
+				localStorage.removeItem(taskName);
+				this.updateTask();
+			},
+			editTask : function(e){
+				var taskName = e.model.item.task;
+				this.new = taskName;
+				localStorage.removeItem(taskName);
+				localStorage.setItem(taskName);
+				this.updateTask();
+			}
+
+		})	
+	
+	</script>
+</dom-module>
