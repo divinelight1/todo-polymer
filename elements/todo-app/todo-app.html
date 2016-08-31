@@ -4,36 +4,83 @@
 <link rel="import" href="../../import-elements.html">
 
 <dom-module id="todo-app">
-	<style>
+	<style is="custom-style">
 	
 	paper-input{
 		width: 80% !important;
 		margin: 0 auto;
 	}
+	    .green{
+		position: absolute;
+		right: 60px;
+		bottom: 10px;
+		}
+
+		.red{
+		position: absolute;
+		right: 10px;
+		bottom: 10px;
+		}
 	
 	</style>
 	<template>
-
 			<paper-header-panel >
 
 				<paper-toolbar>
 					<paper-item>Todo App</paper-item>
 				</paper-toolbar>
+				<paper-input label="Write ToDo" value="{{newTask}}"></paper-input>
+				<paper-fab mini icon="add" id="add" class="green" title="delete" on-tap="addNew"></paper-fab>
+				<paper-fab mini icon="delete" class="red" title="delete" on-tap="deleteAll"></paper-fab>
 				
 				<single-task></single-task>
-
+				
 			</paper-header-panel>
 	</template>
 
-	<script>
+	<script> 
 	
 		Polymer({
 			is : 'todo-app',
 			properties: {
-				title : 'Todo'
-			}
+				newTask : {
 
+					type : String,
+					value : '',
+					notify : true
+
+				},
+
+				tasks : {
+
+					type : Array,
+					notify : true,
+					reflectToAttribute : true,
+					value : []
+				},
+			},
+
+			addNew :  function(){
+
+				var task = this.newTask;
+				this.push('tasks', {task: task});
+				this.newTask = "";
+					
+			},
+
+			removeTask:function(e){
+
+        		var target = e.model;
+        		var index = this.tasks.indexOf(target.get('item'));
+        		this.splice('tasks', index, 1);
+
+    		}
 		});
 
 	</script>
 </dom-module>
+
+
+				
+
+				
