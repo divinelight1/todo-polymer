@@ -50,19 +50,10 @@
 					type : Array,
 					notify : true,
 					value : []
-					
+
 				}
 			
 			},
-
-			removeTask:function(e){
-
-        		var target = e.model;
-        		var index = this.tasks.indexOf(target.get('item'));
-        		this.splice('tasks', index, 1);
-
-    		},
-
     		addNew :  function(){
 
 				var task = this.newTask;
