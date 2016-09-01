@@ -29,11 +29,12 @@
 				<paper-toolbar>
 					<paper-item>Todo App</paper-item>
 				</paper-toolbar>
+
 				<paper-input label="Write ToDo" value="{{newTask}}"></paper-input>
 				<paper-fab mini icon="add" id="add" class="green" title="delete" on-tap="addNew"></paper-fab>
 				<paper-fab mini icon="delete" class="red" title="delete" on-tap="deleteAll"></paper-fab>
-				
-				<single-task></single-task>
+
+				<single-task tasks="{{tasks}}"></single-task>
 				
 			</paper-header-panel>
 	</template>
@@ -43,29 +44,15 @@
 		Polymer({
 			is : 'todo-app',
 			properties: {
-				newTask : {
-
-					type : String,
-					value : '',
-					notify : true
-
-				},
-
+				
 				tasks : {
 
 					type : Array,
 					notify : true,
-					reflectToAttribute : true,
 					value : []
-				},
-			},
-
-			addNew :  function(){
-
-				var task = this.newTask;
-				this.push('tasks', {task: task});
-				this.newTask = "";
 					
+				}
+			
 			},
 
 			removeTask:function(e){
@@ -74,7 +61,15 @@
         		var index = this.tasks.indexOf(target.get('item'));
         		this.splice('tasks', index, 1);
 
-    		}
+    		},
+
+    		addNew :  function(){
+
+				var task = this.newTask;
+				this.push('tasks', {task: task});
+				this.newTask = "";
+					
+			},
 		});
 
 	</script>
