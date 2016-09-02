@@ -6,20 +6,20 @@
 <dom-module id="todo-app">
 	<style is="custom-style">
 	
-	paper-input{
-		width: 80% !important;
-		margin: 0 auto;
-	}
+		paper-input{
+			width: 80% !important;
+			margin: 0 auto;
+		}
 	    .green{
-		position: absolute;
-		right: 60px;
-		bottom: 10px;
+			position: absolute;
+			right: 60px;
+			bottom: 10px;
 		}
 
 		.red{
-		position: absolute;
-		right: 10px;
-		bottom: 10px;
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
 		}
 	
 	</style>
@@ -34,8 +34,9 @@
 				<paper-fab mini icon="add" id="add" class="green" title="delete" on-tap="addNew"></paper-fab>
 				<paper-fab mini icon="delete" class="red" title="delete" on-tap="deleteAll"></paper-fab>
 
-				<single-task tasks="{{tasks}}"></single-task>
-				
+			<template is="dom-repeat" items="{{tasks}}">
+				<single-task task="{{item}}"></single-task>
+			</template>	
 			</paper-header-panel>
 	</template>
 
@@ -45,21 +46,27 @@
 			is : 'todo-app',
 			properties: {
 				
-				newTask : {
-
-					type : String,
-					value : '',
+				tasks : {
+					type : Array,
 					notify : true,
+					value : [{item: 'aldin'}]
 				}
-			
+				
 			},
-    		addNew :  function(){
+			addNew : function(){
 
 				var task = this.newTask;
-				this.push('tasks', {task: task});
+				this.push('tasks', {item: task});
 				this.newTask = "";
-					
+				console.log(this.tasks)
+
+			},
+
+			deleteAll : function(){
+
+				this.tasks = []
 			}
+    		
 
 		});
 

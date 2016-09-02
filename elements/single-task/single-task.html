@@ -4,43 +4,41 @@
 
 	<style is="custom-style">
 		paper-material{
-		width: 74%;
-		margin: 50px auto;
-		padding: 30px;	    
+			width: 74%;
+			margin: 50px auto;
+			padding: 30px;	    
 		}	
 		paper-fab.green{
-		--paper-fab-background: var(--paper-green-500);
-		--paper-fab-keyboard-focus-background: var(--paper-light-green-900);
+			--paper-fab-background: var(--paper-green-500);
+			--paper-fab-keyboard-focus-background: var(--paper-light-green-900);
 		}
 		paper-fab.red{
-		--paper-fab-background: var(--paper-red-900);
-		--paper-fab-keyboard-focus-background: var(--paper-light-red-900);
+			--paper-fab-background: var(--paper-red-900);
+			--paper-fab-keyboard-focus-background: var(--paper-light-red-900);
 		}
-		/*.green{
-		position: absolute;
-		right: 60px;
-		bottom: 10px;
+		.green{
+			position: absolute;
+			right: 60px;
+			bottom: 10px;
 		}
 
 		.red{
-		position: absolute;
-		right: 10px;
-		bottom: 10px;
-		}*/
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+		}
 		paper-input{
-		width: 80% !important;
-		margin: 0 auto;
+			width: 80% !important;
+			margin: 0 auto;
 		}
 	</style>
 
 	<template>
-		<template  is="dom-repeat" items="{{tasks}}">
 			<paper-material elevation="3">
-				<p id="text">{{item.task}}</p>
-				<paper-fab mini icon="delete" class="red" title="delete" on-tap="removeTask"></paper-fab>
+				<p id="text">{{task.item}}</p>
+				<paper-fab mini icon="delete" id="btn" class="red" title="delete" on-tap="removeTask"></paper-fab>
 				<paper-fab mini icon="check" class="green" title="check" on-tap="editTask"></paper-fab>
 			</paper-material>
-		</template>
 	</template>
 
 	<script>
@@ -49,28 +47,15 @@
 			
 			properties : {
 				
-				tasks : {
-
-					type : Array,
+				newTask : {
+					type : String,
 					notify : true,
-					value : []
-
+					value : ''
 				}
 			},
-			removeTask:function(e){
-
-        		var target = e.model;
-        		var index = this.tasks.indexOf(target.get('item'));
-        		this.splice('tasks', index, 1);
-
-    		},
-    		editTask : function(e){
-    			var taskName = e.model.item.task;
-				this.newTask = taskName;
-				var index = this.tasks.indexOf(taskName);
-        		this.splice('tasks', index, 1);
-
-    		}
+			editTask : function(){
+				
+			}
 
 		})	
 	
