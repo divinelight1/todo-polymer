@@ -16,7 +16,7 @@
 		--paper-fab-background: var(--paper-red-900);
 		--paper-fab-keyboard-focus-background: var(--paper-light-red-900);
 		}
-		.green{
+		/*.green{
 		position: absolute;
 		right: 60px;
 		bottom: 10px;
@@ -26,7 +26,7 @@
 		position: absolute;
 		right: 10px;
 		bottom: 10px;
-		}
+		}*/
 		paper-input{
 		width: 80% !important;
 		margin: 0 auto;
@@ -37,8 +37,8 @@
 		<template  is="dom-repeat" items="{{tasks}}">
 			<paper-material elevation="3">
 				<p id="text">{{item.task}}</p>
-				<paper-fab mini icon="delete" class="red" title="delete" on-click="removeTask"></paper-fab>
-				<paper-fab mini icon="check" class="green" title="check" on-click="editTask"></paper-fab>
+				<paper-fab mini icon="delete" class="red" title="delete" on-tap="removeTask"></paper-fab>
+				<paper-fab mini icon="check" class="green" title="check" on-tap="editTask"></paper-fab>
 			</paper-material>
 		</template>
 	</template>
@@ -49,14 +49,13 @@
 			
 			properties : {
 				
-				newTask : {
+				tasks : {
 
-					type : String,
-					value : '',
+					type : Array,
 					notify : true,
+					value : []
 
 				}
-				
 			},
 			removeTask:function(e){
 
@@ -65,6 +64,13 @@
         		this.splice('tasks', index, 1);
 
     		},
+    		editTask : function(e){
+    			var taskName = e.model.item.task;
+				this.newTask = taskName;
+				var index = this.tasks.indexOf(taskName);
+        		this.splice('tasks', index, 1);
+
+    		}
 
 		})	
 	

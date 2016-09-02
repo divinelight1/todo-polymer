@@ -45,12 +45,11 @@
 			is : 'todo-app',
 			properties: {
 				
-				tasks : {
+				newTask : {
 
-					type : Array,
+					type : String,
+					value : '',
 					notify : true,
-					value : []
-
 				}
 			
 			},
@@ -60,7 +59,8 @@
 				this.push('tasks', {task: task});
 				this.newTask = "";
 					
-			},
+			}
+
 		});
 
 	</script>
