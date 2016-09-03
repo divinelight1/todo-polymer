@@ -30,12 +30,12 @@
 					<paper-item>Todo App</paper-item>
 				</paper-toolbar>
 
-				<paper-input label="Write ToDo" value="{{newTask}}"></paper-input>
+				<paper-input label="Write ToDo" value="{{newTask}}" id="val"></paper-input>
 				<paper-fab mini icon="add" id="add" class="green" title="delete" on-tap="addNew"></paper-fab>
 				<paper-fab mini icon="delete" class="red" title="delete" on-tap="deleteAll"></paper-fab>
 
 			<template is="dom-repeat" items="{{tasks}}">
-				<single-task task="{{item}}"></single-task>
+				<single-task task="{{item}}" on-remove="removeTask"></single-task>
 			</template>	
 			</paper-header-panel>
 	</template>
@@ -50,25 +50,30 @@
 					type : Array,
 					notify : true,
 					value : [{item: 'aldin'}]
-				}
-				
+				},
+
 			},
 			addNew : function(){
 
 				var task = this.newTask;
 				this.push('tasks', {item: task});
 				this.newTask = "";
-				console.log(this.tasks)
 
 			},
 
 			deleteAll : function(){
 
-				this.tasks = []
-			}
-    		
+				this.set("tasks", []);
 
+			},
+
+			removeTask : function(e){
+				this.fire('remove', this.task); 
+				var task = e.detail;  
+				this.splice('tasks', this.tasks.indexOf(task), 1);
+			}
 		});
+			
 
 	</script>
 </dom-module>

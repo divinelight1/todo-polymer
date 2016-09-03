@@ -35,6 +35,7 @@
 
 	<template>
 			<paper-material elevation="3">
+			  <paper-input label="Edit Task" value="{{task.item}}" id="editInput" hidden="true"></paper-input>
 				<p id="text">{{task.item}}</p>
 				<paper-fab mini icon="delete" id="btn" class="red" title="delete" on-tap="removeTask"></paper-fab>
 				<paper-fab mini icon="check" class="green" title="check" on-tap="editTask"></paper-fab>
@@ -50,12 +51,16 @@
 				newTask : {
 					type : String,
 					notify : true,
-					value : ''
+				
 				}
 			},
-			editTask : function(){
-				
-			}
+			removeTask : function(){
+				this.fire('remove', this.task);
+
+			},
+			editTask: function() {
+                this.$.editInput.hidden = !this.$.editInput.hidden;
+            }
 
 		})	
 	
